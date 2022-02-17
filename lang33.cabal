@@ -1,0 +1,31 @@
+cabal-version:      3.0
+name:               lang33
+version:            0.1.0.0
+synopsis:
+
+-- A longer description of the package.
+-- description:
+homepage:
+
+-- A URL where users can report bugs.
+-- bug-reports:
+license:            NONE
+author:             Smirnov Ilya
+maintainer:         ilyasm0919@gmail.com
+
+-- A copyright notice.
+-- copyright:
+category:           Language
+extra-source-files: CHANGELOG.md
+
+executable lang33
+    main-is:          Main.hs
+
+    -- Modules included in this executable, other than Main.
+    other-modules:    Syntax, Parse, TcSyntax, Tc, Builtins, CodeGen
+
+    -- LANGUAGE extensions used by modules in this package.
+    -- other-extensions:
+    build-depends:    base >=4.14.3.0, containers, mtl, parsec, haskell-src-exts
+    hs-source-dirs:   src
+    default-language: Haskell2010

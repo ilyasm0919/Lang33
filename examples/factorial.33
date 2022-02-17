@@ -1,0 +1,22 @@
+factorial(n) {
+    if sub(0, n) { Fail("Negative number") null }
+    n = n
+    res = 1
+    while n {
+        res = mul(res, n)
+        n = sub(n, 1)
+    }
+    res
+}
+
+main() {
+    factorial(parseNum(getLine@())) with handler h {
+        pure(x) {
+            print(numToStr(x))
+        }
+
+        Fail(msg, cont) {
+            print(msg)
+        }
+    }
+}

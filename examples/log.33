@@ -1,0 +1,73 @@
+effect Logger<><><> {
+    Log(Str) : Unit
+}
+
+
+sum(a, b) {
+    Log(setSubstring@("a = ", 4, 0, numToStr(a)))
+    Log(setSubstring@("b = ", 4, 0, numToStr(b)))
+    Log(setSubstring@("a + b = ", 8, 0, numToStr(add(a, b))))
+}
+
+
+printLog() {
+    handler h {
+        Log(msg, cont) {
+            print@(setSubstring("Log: \n", 5, 0, msg))
+            cont(null) with h
+        }
+    }
+}
+
+ignoreLog() {
+    handler h {
+        Log(msg, cont) {
+            cont(null) with h
+        }
+    }
+}
+
+printLogThenIgnore() {
+    handler h {
+        Log(msg, cont) {
+            print@(setSubstring("\n", 0, 0, msg))
+            cont(null) with ignoreLog()
+        }
+    }
+}
+
+printEvenLog() {
+    handler h1 {
+        Log(msg, cont) {
+            print@(setSubstring("\n", 0, 0, msg))
+            cont(null) with handler h2 {
+                Log(msg, cont) {
+                    cont(null) with h1
+                }
+            }
+        }
+    }
+}
+
+
+testLogs() {
+    print@("Print log\n")
+    sum(5, 7) with printLog()
+
+    print@("\nIgnore log\n")
+    sum(5, 7) with ignoreLog()
+
+    print@("\nPrint log then ignore\n")
+    sum(5, 7) with printLogThenIgnore()
+
+    print@("\nPrint even log\n")
+    sum(5, 7) with printEvenLog()
+}
+
+main() {
+    testLogs() with handler h {
+        Fail(msg, cont) {
+            print(msg)
+        }
+    }
+}
